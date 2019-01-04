@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card border border-dark" style="right: 10px; top: 1mm; width: 16rem;">
+        <div class="card-header text-center bg-dark">
+          Welcome {{userName}}
+        </div>
+        <div class="list-group text-center">
+          <a class="btn list-group-item list-group-item-action" (click)="link('1')" [class.active]="currentLink==='1'"
+            routerLink="/home/operate-relay">Home</a>
+          <a class="btn list-group-item list-group-item-action" (click)="logout()" [class.active]="currentLink==='2'">Logout</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9" style="top: 1mm; right: 5rem;">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

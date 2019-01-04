@@ -1,0 +1,8 @@
+.card-header {
+    color: rgb(74, 231, 35);
+    font-size: 25px;
+}
+
+.card {
+    border-width: 2px !important;
+}

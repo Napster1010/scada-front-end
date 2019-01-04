@@ -1,0 +1,101 @@
+<div class="card border border-dark">
+  <div class="card-header text-center bg-dark">
+    <strong>SCADA</strong>
+  </div>
+  <div *ngIf="currentUser() === 'admin'" class="card-body">
+    <table class="offset-md-4">
+      <tr>
+        <td class="text-dark">
+          <h5>Selection Type</h5>
+        </td>
+        <td>
+          <div class="offset-md-1 form-check form-check-inline">
+
+            <label class="container">Single
+              <input type="radio" checked="checked" name="sel" id="single" (click) = "selectionMode('single')">
+              <span class="checkmark"></span>
+            </label>
+
+            <label class="container">All
+              <input type="radio" name="sel" id="all" (click) = "selectionMode('all')">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-footer">    
+    <table class="table text-center">
+      <tr>
+        <td>
+          <h2 style="color: red;">R-Phase relay</h2>
+        </td>
+        <td>
+          <h2 class="text-warning">Y-Phase relay</h2>
+        </td>
+        <td>
+          <h2 class="text-primary">B-Phase relay</h2>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!-- For R-Phase -->
+          <a *ngIf="currentStatusR==='ON'" class="btn" (click)="changeStatus('R')" placement="right" ngbTooltip="Press to Turn OFF"><img
+              id="on-img-r" src="assets/off.jpg" width="125" height="125" /></a>
+          <a *ngIf="currentStatusR==='OFF'" class="btn" (click)="changeStatus('R')" placement="right" ngbTooltip="Press to Turn ON"><img
+              id="off-img-r" src="assets/on.jpg" width="125" height="125" /></a>
+        </td>
+        <td>
+          <!-- For Y-Phase -->
+          <a *ngIf="currentStatusY==='ON'" class="btn" (click)="changeStatus('Y')" placement="right" ngbTooltip="Press to Turn OFF"><img
+              id="on-img-r" src="assets/off.jpg" width="125" height="125" /></a>
+          <a *ngIf="currentStatusY==='OFF'" class="btn" (click)="changeStatus('Y')" placement="right" ngbTooltip="Press to Turn ON"><img
+              id="off-img-r" src="assets/on.jpg" width="125" height="125" /></a>
+        </td>
+        <td>
+          <!-- For B-Phase -->
+          <a *ngIf="currentStatusB==='ON'" class="btn" (click)="changeStatus('B')" placement="right" ngbTooltip="Press to Turn OFF"><img
+              id="on-img-r" src="assets/off.jpg" width="125" height="125" /></a>
+          <a *ngIf="currentStatusB==='OFF'" class="btn" (click)="changeStatus('B')" placement="right" ngbTooltip="Press to Turn ON"><img
+              id="off-img-r" src="assets/on.jpg" width="125" height="125" /></a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h4 style="color: red;">Current: 0.00 Amps</h4>
+        </td>
+        <td>
+          <h4 class="text-warning">Current: 0.00 Amps</h4>
+        </td>
+        <td>
+          <h4 class="text-primary">Current: 0.00 Amps</h4>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+<!--
+        <tr>
+        <td>
+          <button *ngIf="currentStatusR==='ON'" type="button" (click) = "changeStatus('R')" class="btn btn-success" style="width: 7rem; height: 3rem;">TURN
+              OFF</button>
+            <button *ngIf="currentStatusR==='OFF'" type="button" (click) = "changeStatus('R')" class="btn btn-danger" style="width: 7rem; height: 3rem;">TURN
+              ON</button>
+          </td>
+          <td>
+            <button *ngIf="currentStatusY==='ON'" type="button" (click) = "changeStatus('Y')" class="btn btn-success" style="width: 7rem; height: 3rem;">TURN
+              OFF</button>
+            <button *ngIf="currentStatusY==='OFF'" type="button" (click) = "changeStatus('Y')" class="btn btn-danger" style="width: 7rem; height: 3rem;">TURN
+              ON</button>
+          </td>
+          <td>
+            <button *ngIf="currentStatusB==='ON'" type="button" (click) = "changeStatus('B')" class="btn btn-success" style="width: 7rem; height: 3rem;">TURN
+              OFF</button>
+            <button *ngIf="currentStatusB==='OFF'" type="button" (click) = "changeStatus('B')" class="btn btn-danger" style="width: 7rem; height: 3rem;">TURN
+              ON</button>
+          </td>
+        </tr>
+-->
