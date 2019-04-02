@@ -2,7 +2,18 @@
   <div class="card-header text-center bg-dark">
     Current Value
   </div>
-  <div class="card-body">
-    <h1 class="card-title text-center text-info"><strong>0.00 Amps</strong></h1>
+  <div class="card-body text-center">
+    <div class="col-md-3 offset-md-4">
+      <select ngModel class="form-control" id="inputCTRatio" name="CTRatio" required #inputCTRatio="ngModel">
+        <option selected>Select CT Ratio</option>
+      </select>
+    </div>
+  </div>
+  <div class="card-footer">
+    <h3 class="text-danger">R-Phase Current -> </h3>
+    <br>
+    <h3 class="text-warning">Y-Phase Current -> </h3>
+    <br>
+    <h3 class="text-primary">B-Phase Current -> </h3>
   </div>
 </div>

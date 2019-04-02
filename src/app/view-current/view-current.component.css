@@ -6,3 +6,7 @@
 .card {
     border-width: 2px !important;
 }
+
+.card-footer {
+    background-color: white;
+}

@@ -13,13 +13,14 @@ import { HomeComponent } from './home/home.component';
 import { ViewCurrentComponent } from './view-current/view-current.component';
 import { OperateRelayComponent } from './operate-relay/operate-relay.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
     ViewCurrentComponent,
-    OperateRelayComponent
+    OperateRelayComponent    
   ],
   imports: [
     FormsModule,

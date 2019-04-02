@@ -1,6 +1,8 @@
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { ScadaService } from './../services/scada-service/scada.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/takeWhile';
 
 @Component({
   selector: 'app-operate-relay',
@@ -16,6 +18,10 @@ export class OperateRelayComponent implements OnInit {
   
   loading: boolean;
 
+  cAlive: boolean;
+  rPhaseCurrent: string = "0.0";
+  yPhaseCurrent: string = "0.0";
+  bPhaseCurrent: string = "0.0";
 
 
   constructor(private router: Router, private scadaService: ScadaService) {
@@ -29,6 +35,29 @@ export class OperateRelayComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cAlive = true;
+
+    IntervalObservable.create(5000)
+      .takeWhile(() => this.cAlive)
+      .subscribe(() => {
+        console.log(ctRatioDropdown.value);
+        this.scadaService.getCurrent(JSON.parse(localStorage.getItem('currentUser'))['userId'], "20").subscribe(
+          data => {
+            console.log(data);
+            this.rPhaseCurrent = data['rPhaseCurrent'];
+            this.bPhaseCurrent = data['bPhaseCurrent'];
+            this.yPhaseCurrent = data['yPhaseCurrent'];
+          },error => {
+            console.log("SOME ERROR OCCURRED!!");
+            console.log(error);
+          }
+        )    
+      });
+
+  }
+
+  ngOnDestroy(){
+    this.cAlive = false;
   }
 
   selectionMode(mode: string) {

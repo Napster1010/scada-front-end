@@ -17,8 +17,23 @@
     border:0px !important;
 }
 
+.dropdown{
+  width: 21ex;  
+  padding-left: 3ex;
+}
+
+.text-pad{
+  padding-top: 3ex;
+  padding-left: 4ex;
+}
+
 .card-footer {
     background-color: white;
+}
+
+select{
+  text-align: center;
+  text-align-last: center;
 }
 
 /* Customize the label (the container) */

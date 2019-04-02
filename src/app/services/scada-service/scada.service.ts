@@ -30,4 +30,11 @@ export class ScadaService {
       headers: header
     });
   }
+
+  getCurrent(username: string, ctRatio: string){
+    return this.http.get<any>(`http://localhost:8080/scada/current`, {params: {
+      userId: username,
+      ctRatio: ctRatio
+    }});
+  }
 }

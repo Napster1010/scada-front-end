@@ -24,7 +24,21 @@
         </td>
       </tr>
     </table>
-  </div>
+    <div class="offset-md-4">
+          <td class="text-dark text-pad">
+            <h5>C.T Ratio</h5>
+          </td>
+          <td>
+            <div class="dropdown offset-md-1">
+                <select ngModel class="form-control text-dark select-pad" style="font-size: 17px; font-weight: bold;" name="ctRatio" id="ctRatioDropdown" #ctRatioDropdown="ngModel">
+                    <option value="1" style="font-size: 17px" selected>100/5</option>
+                    <option value="2" style="font-size: 17px">200/5</option>
+                    <option value="3" style="font-size: 17px">300/5</option>
+                  </select>                  
+            </div>
+          </td>
+    </div>        
+</div>
   <div class="card-footer">    
     <table class="table text-center">
       <tr>
@@ -63,13 +77,13 @@
       </tr>
       <tr>
         <td>
-          <h4 style="color: red;">Current: 0.00 Amps</h4>
+          <h4 style="color: red;">Current: {{rPhaseCurrent}} Amps</h4>
         </td>
         <td>
-          <h4 class="text-warning">Current: 0.00 Amps</h4>
+          <h4 class="text-warning">Current: {{yPhaseCurrent}} Amps</h4>
         </td>
         <td>
-          <h4 class="text-primary">Current: 0.00 Amps</h4>
+          <h4 class="text-primary">Current: {{bPhaseCurrent}} Amps</h4>
         </td>
       </tr>
     </table>
