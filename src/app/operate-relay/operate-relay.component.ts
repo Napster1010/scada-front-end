@@ -13,6 +13,10 @@ export class OperateRelayComponent implements OnInit {
   currentStatusR: string;
   currentStatusY: string;
   currentStatusB: string;
+
+  ctRatioVal: string = "1"; 
+  ctRatio: string = "20"; 
+  currentReadSuccess: boolean = true;
   
   currentSelectionMode: string = 'single';
   
@@ -21,7 +25,7 @@ export class OperateRelayComponent implements OnInit {
   cAlive: boolean;
   rPhaseCurrent: string = "0.0";
   yPhaseCurrent: string = "0.0";
-  bPhaseCurrent: string = "0.0";
+  bPhaseCurrent: string = "0.0";  
 
 
   constructor(private router: Router, private scadaService: ScadaService) {
@@ -34,22 +38,50 @@ export class OperateRelayComponent implements OnInit {
     return JSON.parse(localStorage.getItem('currentUser'))['role'];
   }
 
+  ctRatioChange(){
+    if(this.ctRatioVal=="1"){
+      this.ctRatio = "20";
+    }else if(this.ctRatioVal=="2"){
+      this.ctRatio = "40";
+    }else if(this.ctRatioVal=="3"){
+      this.ctRatio = "60";
+    }
+  }
+
   ngOnInit() {
     this.cAlive = true;
+
+    this.scadaService.getCurrent(JSON.parse(localStorage.getItem('currentUser'))['userId'], this.ctRatio).subscribe(
+      data => {
+        console.log(data);
+        this.rPhaseCurrent = data['rPhaseCurrent'];
+        this.bPhaseCurrent = data['bPhaseCurrent'];
+        this.yPhaseCurrent = data['yPhaseCurrent'];
+        if(this.currentReadSuccess==false)
+          this.currentReadSuccess = true;
+      },error => {
+        console.log("SOME ERROR OCCURRED!!");
+        console.log(error);
+        if(this.currentReadSuccess==true)
+          this.currentReadSuccess = false;
+      });
 
     IntervalObservable.create(5000)
       .takeWhile(() => this.cAlive)
       .subscribe(() => {
-        console.log(ctRatioDropdown.value);
-        this.scadaService.getCurrent(JSON.parse(localStorage.getItem('currentUser'))['userId'], "20").subscribe(
+        this.scadaService.getCurrent(JSON.parse(localStorage.getItem('currentUser'))['userId'], this.ctRatio).subscribe(
           data => {
             console.log(data);
             this.rPhaseCurrent = data['rPhaseCurrent'];
             this.bPhaseCurrent = data['bPhaseCurrent'];
             this.yPhaseCurrent = data['yPhaseCurrent'];
-          },error => {
+            if(this.currentReadSuccess==false)
+              this.currentReadSuccess = true;
+          },error => {  
             console.log("SOME ERROR OCCURRED!!");
             console.log(error);
+            if(this.currentReadSuccess==true)
+              this.currentReadSuccess = false;
           }
         )    
       });
@@ -128,6 +160,7 @@ export class OperateRelayComponent implements OnInit {
           this.changeVarStatusSingle(phase);          
         },
         error => {
+          alert("Couldn't change the status!");
           console.log("SOME ERROR OCCURRED!!!")
           console.log(error);
         }
@@ -151,6 +184,7 @@ export class OperateRelayComponent implements OnInit {
           this.changeVarStatusAll();
         },
         error => {
+          alert("Couldn't change the status!");
           console.log("SOME ERROR OCCURRED!!!")
           console.log(error);
         }

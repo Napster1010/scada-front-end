@@ -30,8 +30,8 @@
           </td>
           <td>
             <div class="dropdown offset-md-1">
-                <select ngModel class="form-control text-dark select-pad" style="font-size: 17px; font-weight: bold;" name="ctRatio" id="ctRatioDropdown" #ctRatioDropdown="ngModel">
-                    <option value="1" style="font-size: 17px" selected>100/5</option>
+                <select class="form-control text-dark select-pad" style="font-size: 17px; font-weight: bold;" name="ctRatio" id="ctRatioDropdown" [(ngModel)]="ctRatioVal" (change)="ctRatioChange()">
+                    <option value="1" style="font-size: 17px">100/5</option>
                     <option value="2" style="font-size: 17px">200/5</option>
                     <option value="3" style="font-size: 17px">300/5</option>
                   </select>                  
@@ -87,7 +87,9 @@
         </td>
       </tr>
     </table>
-  </div>
+    <br>
+    <h5 *ngIf="currentReadSuccess==false" class="text-center text-danger offset-md-3 col-md-6" style="border-style: solid; border-radius: 60px; border-color: crimson; border-width: 5px;">Not able to retrieve the current value at the moment!!</h5>
+</div>
 </div>
 
 

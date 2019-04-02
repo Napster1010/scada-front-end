@@ -2,6 +2,7 @@ import { AuthService } from './../services/auth-service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
+import 'rxjs/add/operator/timeout';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,9 @@ export class LoginComponent implements OnInit {
     let username = loginForm.value['username'];
     let password = loginForm.value['password'];
 
-    this.authService.login(username, password).subscribe(
+    this.authService.login(username, password)
+    .timeout(6000)
+    .subscribe(
       data => {
         if(data.hasOwnProperty('message'))
           this.loginFailed = true;
