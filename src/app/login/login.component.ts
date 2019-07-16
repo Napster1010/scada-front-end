@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     let password = loginForm.value['password'];
 
     this.authService.login(username, password)
-    .timeout(6000)
+    .timeout(10000)
     .subscribe(
       data => {
         if(data.hasOwnProperty('message'))

@@ -83,9 +83,32 @@ export class OperateRelayComponent implements OnInit {
             if(this.currentReadSuccess==true)
               this.currentReadSuccess = false;
           }
-        )    
-      });
+        );
+        
+        this.scadaService.getRelayStatus("R").subscribe(
+          data => {
+            this.currentStatusR = data;
+          }, error => {
+            console.log(error);
+          }
+        );
 
+        this.scadaService.getRelayStatus("Y").subscribe(
+          data => {
+            this.currentStatusY = data;            
+          }, error => {
+            console.log(error);
+          }
+        );
+
+        this.scadaService.getRelayStatus("B").subscribe(
+          data => {
+            this.currentStatusB = data;            
+          }, error => {
+            console.log(error);
+          }
+        );
+      });
   }
 
   ngOnDestroy(){
@@ -143,53 +166,56 @@ export class OperateRelayComponent implements OnInit {
   }
 
   changeStatus(phase: string) {
-    this.loading = true;
-    if (this.currentSelectionMode === 'single') {
-      let currentStatus: string;
-      if (phase === 'R')
-        currentStatus = this.invert(this.currentStatusR);
-      else if (phase === 'Y')
-        currentStatus = this.invert(this.currentStatusY);
-      else if (phase === 'B')
-        currentStatus = this.invert(this.currentStatusB);
-
-      this.scadaService.changeRelayStatusSingle(phase, currentStatus, JSON.parse(localStorage.getItem('currentUser'))['userId']).subscribe(
-        data => {
-          console.log("REQUEST PROCESSED SUCCESSFULLY!!");
-          console.log(data);
-          this.changeVarStatusSingle(phase);          
-        },
-        error => {
-          alert("Couldn't change the status!");
-          console.log("SOME ERROR OCCURRED!!!")
-          console.log(error);
-        }
-      );
-    }
-    else {
-      let newStatusR: string = this.invert(this.currentStatusR);
-      let newStatusY: string = this.invert(this.currentStatusY);
-      let newStatusB: string = this.invert(this.currentStatusB);    
-            
-      let relayStatus = {
-        "R": newStatusR,
-        "Y": newStatusY,
-        "B": newStatusB
+    if(this.currentUser() === 'admin'){
+      this.loading = true;
+      if (this.currentSelectionMode === 'single') {
+        let currentStatus: string;
+        if (phase === 'R')
+          currentStatus = this.invert(this.currentStatusR);
+        else if (phase === 'Y')
+          currentStatus = this.invert(this.currentStatusY);
+        else if (phase === 'B')
+          currentStatus = this.invert(this.currentStatusB);
+  
+        this.scadaService.changeRelayStatusSingle(phase, currentStatus, JSON.parse(localStorage.getItem('currentUser'))['userId']).subscribe(
+          data => {
+            console.log("REQUEST PROCESSED SUCCESSFULLY!!");
+            console.log(data);
+            this.changeVarStatusSingle(phase);          
+          },
+          error => {
+            alert("Couldn't change the status!");
+            console.log("SOME ERROR OCCURRED!!!")
+            console.log(error);
+          }
+        );
       }
-
-      this.scadaService.changeRelayStatusAll(relayStatus, JSON.parse(localStorage.getItem('currentUser'))['userId']).subscribe(
-        data => {
-          console.log("REQUEST PROCESSED SUCCESSFULLY!!");
-          console.log(data);
-          this.changeVarStatusAll();
-        },
-        error => {
-          alert("Couldn't change the status!");
-          console.log("SOME ERROR OCCURRED!!!")
-          console.log(error);
+      else {
+        let newStatusR: string = this.invert(this.currentStatusR);
+        let newStatusY: string = this.invert(this.currentStatusY);
+        let newStatusB: string = this.invert(this.currentStatusB);    
+              
+        let relayStatus = {
+          "R": newStatusR,
+          "Y": newStatusY,
+          "B": newStatusB
         }
-      )
+  
+        this.scadaService.changeRelayStatusAll(relayStatus, JSON.parse(localStorage.getItem('currentUser'))['userId']).subscribe(
+          data => {
+            console.log("REQUEST PROCESSED SUCCESSFULLY!!");
+            console.log(data);
+            this.changeVarStatusAll();
+          },
+          error => {
+            alert("Couldn't change the status!");
+            console.log("SOME ERROR OCCURRED!!!")
+            console.log(error);
+          }
+        )
+      }  
+    }else{
+      alert('User not authorized to do this operation !!');
     }
-
   }
 }

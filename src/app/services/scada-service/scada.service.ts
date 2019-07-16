@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,18 @@ export class ScadaService {
     body = body.set('relayNo', relayNo);
     body = body.set('status', status);
     body = body.set('userId', userId);
-    return this.http.post<any>(`http://localhost:8080/scada/relay-status`, body, {
+    return this.http.post<any>(environment.baseUrl + `/scada/relay-status`, body, {
       headers: header
+    });
+  }
+
+  getRelayStatus(relayNo: string){
+    let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    let params = new HttpParams();
+    params = params.set('relay-no', relayNo);
+    return this.http.post<any>(environment.baseUrl + `/scada/relay-status`, {
+      headers: header,
+      params: params
     });
   }
 
@@ -26,13 +37,13 @@ export class ScadaService {
       "userId": userId
     }
     console.log(reqObj);
-    return this.http.post<any>(`http://localhost:8080/scada/relay-status/all`, reqObj, {
+    return this.http.post<any>(environment.baseUrl + `/scada/relay-status/all`, reqObj, {
       headers: header
     });
   }
 
   getCurrent(username: string, ctRatio: string){
-    return this.http.get<any>(`http://localhost:8080/scada/current`, {params: {
+    return this.http.get<any>(environment.baseUrl + `/scada/current`, {params: {
       userId: username,
       ctRatio: ctRatio
     }});
