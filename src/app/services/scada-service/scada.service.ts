@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +21,12 @@ export class ScadaService {
   }
 
   getRelayStatus(relayNo: string){
-    let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');    
     let params = new HttpParams();
     params = params.set('relay-no', relayNo);
-    return this.http.post<any>(environment.baseUrl + `/scada/relay-status`, {
+    return this.http.get<any>(environment.baseUrl + `/scada/relay-status`, {
       headers: header,
+      responseType: 'text' as 'json',
       params: params
     });
   }
